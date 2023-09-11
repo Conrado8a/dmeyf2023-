@@ -17,7 +17,7 @@ select
 				cast(coalesce(convert(decimal(10,2),cast(mrentabilidad as varchar (6))),0) as int)*1.0/
 					cast(coalesce(convert(decimal(10,2),cast(mrentabilidad_annual as varchar (6))),0) as int) end as ganancia_porcentual_mes,
 
-		mcomisiones,mactivos_margen,mpasivos_margen,
+		--mcomisiones,mactivos_margen,mpasivos_margen,
 
 		cast(coalesce(convert(decimal(10,2),cast(mcomisiones as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mactivos_margen as varchar(6))),0) + 
@@ -28,12 +28,12 @@ select
 		ccuenta_corriente,
 		ccaja_ahorro,
 
-		mcuenta_corriente_adicional,mcuenta_corriente,
+		--mcuenta_corriente_adicional,mcuenta_corriente,
 
 		cast(coalesce(convert(decimal(10,2),cast(mcuenta_corriente_adicional as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mcuenta_corriente as varchar (6))),0) as int) as pesos_cta_corriente,
 
-		mcaja_ahorro,mcaja_ahorro_adicional,mcaja_ahorro_dolares,
+		--mcaja_ahorro,mcaja_ahorro_adicional,mcaja_ahorro_dolares,
 
 		cast(coalesce(convert(decimal(10,2),cast(mcaja_ahorro as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mcaja_ahorro_adicional as varchar (6))),0) + 
@@ -41,10 +41,16 @@ select
 		
 		cast(coalesce(convert(decimal(10,2),cast(mcuentas_saldo as varchar (6))),0) as int) as saldo_total,
 
-		--case	when convert(decimal(10, 2), mcuentas_saldo) = 0 then 0 
-		--		when mcuentas_saldo = '' then '' else
-		--		(convert(decimal(10, 2), mcuenta_corriente_adicional) + convert(decimal(10, 2), mcuenta_corriente))/convert(decimal(10, 2),mcuentas_saldo) end as porcentaje_cta_corriente,
-		--(cast(mcaja_ahorro as decimal) + cast(mcaja_ahorro_adicional as decimal) + cast(mcaja_ahorro_dolares as decimal))/mcuentas_saldo as porcentaje_caja_ahorro,
+		case	when convert(decimal(10, 2), cast(mcuentas_saldo as varchar(6))) = 0 then 0 
+				when mcuentas_saldo  is null then '' else
+				(convert(decimal(10, 2), cast(mcuenta_corriente_adicional as varchar (6))) + convert(decimal(10, 2), cast(mcuenta_corriente as varchar (6))))/
+				convert(decimal(10, 2),cast(mcuentas_saldo as varchar (6))) end as porcentaje_cta_corriente,
+
+		case	when convert(decimal(10, 2), cast(mcuentas_saldo as varchar(6))) = 0 then 0 
+				when mcuentas_saldo  is null then '' else
+				(convert(decimal(10, 2), cast(mcaja_ahorro as varchar (6))) + convert(decimal(10, 2), cast(mcaja_ahorro_dolares as varchar (6)))
+				+ convert(decimal(10, 2), cast(mcaja_ahorro_adicional as varchar (6))))/
+				convert(decimal(10, 2),cast(mcuentas_saldo as varchar (6))) end as porcentaje_cta_corriente,
 
 		cdescubierto_preacordado,
 
@@ -53,34 +59,34 @@ select
 
 		cast(coalesce(convert(decimal(10,2),cast(mautoservicio as varchar (6))),0) as int) as mautoservicio,
 
-		ctarjeta_visa_transacciones, ctarjeta_master_transacciones,
+		--ctarjeta_visa_transacciones, ctarjeta_master_transacciones,
 
 		cast(coalesce(convert(decimal(10,2),cast(ctarjeta_visa_transacciones as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(ctarjeta_master_transacciones as varchar (6))),0) as int) as tarjetas_creditos,
 
-		mtarjeta_visa_consumo, mtarjeta_master_consumo,
+		--mtarjeta_visa_consumo, mtarjeta_master_consumo,
 
 		cast(coalesce(convert(decimal(10,2),cast(mtarjeta_visa_consumo as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mtarjeta_master_consumo as varchar (6))),0) as int) as consumo_pesos_tarjetas_credito,
 
-		ctarjeta_visa, ctarjeta_master,
+		--ctarjeta_visa, ctarjeta_master,
 
 		cast(coalesce(convert(decimal(10,2),cast(ctarjeta_visa as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(ctarjeta_master as varchar (6))),0) as int) as cantidad_cuentas_tarjeta_credito,
 		
-		cprestamos_personales,cprestamos_hipotecarios,cprestamos_prendarios,
+		--cprestamos_personales,cprestamos_hipotecarios,cprestamos_prendarios,
 
 		cast(coalesce(convert(decimal(10,2),cast(cprestamos_personales as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(cprestamos_hipotecarios as varchar (6))),0) +
 			coalesce(convert(decimal(10,2),cast(cprestamos_prendarios as varchar (6))),0) as int) as cantidad_prestamos,
 
-		mprestamos_prendarios, mprestamos_hipotecarios,mprestamos_personales,
+		--mprestamos_prendarios, mprestamos_hipotecarios,mprestamos_personales,
 
 		cast(coalesce(convert(decimal(10,2),cast(mprestamos_prendarios as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mprestamos_hipotecarios as varchar (6))),0) +
 			coalesce(convert(decimal(10,2),cast(mprestamos_personales as varchar (6))),0) as int) as dinero_prestamos,
 
-		mplazo_fijo_dolares,mplazo_fijo_pesos,minversion1_pesos,minversion2,minversion1_dolares,
+		--mplazo_fijo_dolares,mplazo_fijo_pesos,minversion1_pesos,minversion2,minversion1_dolares,
 
 		cast(coalesce(convert(decimal(10,2),cast(mplazo_fijo_dolares as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mplazo_fijo_pesos as varchar (6))),0) +
@@ -88,13 +94,13 @@ select
 			coalesce(convert(decimal(10,2),cast(minversion1_dolares as varchar (6))),0) +
 			coalesce(convert(decimal(10,2),cast(minversion2 as varchar (6))),0) as int) as dinero_invertido,
 		
-		cplazo_fijo,cinversion1,cinversion2,
+		--cplazo_fijo,cinversion1,cinversion2,
 
 		cast(coalesce(convert(decimal(10,2),cast(cplazo_fijo as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(cinversion1 as varchar (6))),0) +
 			coalesce(convert(decimal(10,2),cast(cinversion2 as varchar (6))),0) as int) as cantidad_inversiones,
 
-		cseguro_vida,cseguro_auto,cseguro_vivienda,cseguro_accidentes_personales,
+		--cseguro_vida,cseguro_auto,cseguro_vivienda,cseguro_accidentes_personales,
 
 		cast(coalesce(convert(decimal(10,2),cast(cseguro_vida as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(cseguro_auto as varchar (6))),0) +
@@ -103,12 +109,12 @@ select
 
 		ccaja_seguridad,
 
-		mpayroll,mpayroll2,
+		--mpayroll,mpayroll2,
 
 		cast(coalesce(convert(decimal(10,2),cast(mpayroll as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mpayroll2 as varchar (6))),0) as int) as haberes,
 
-		cpayroll2_trx,cpayroll_trx,
+		--cpayroll2_trx,cpayroll_trx,
 
 		cast(coalesce(convert(decimal(10,2),cast(cpayroll2_trx as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(cpayroll_trx as varchar (6))),0) as int) as cantidad_haberes,
@@ -116,12 +122,12 @@ select
 		ccuenta_debitos_automaticos,
 		mcuenta_debitos_automaticos,
 
-		ctarjeta_visa_debitos_automaticos,ctarjeta_master_debitos_automaticos,
+		--ctarjeta_visa_debitos_automaticos,ctarjeta_master_debitos_automaticos,
 
 		cast(coalesce(convert(decimal(10,2),cast(ctarjeta_visa_debitos_automaticos as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(ctarjeta_master_debitos_automaticos as varchar (6))),0) as int) as cantidad_debitos_sobre_tc,
 
-		mttarjeta_visa_debitos_automaticos, mttarjeta_master_debitos_automaticos,
+		--mttarjeta_visa_debitos_automaticos, mttarjeta_master_debitos_automaticos,
 
 		cast(coalesce(convert(decimal(10,2),cast(mttarjeta_visa_debitos_automaticos as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mttarjeta_master_debitos_automaticos as varchar (6))),0) as int) as pesos_debitos_sobre_tc,
@@ -135,22 +141,22 @@ select
 		ccajeros_propios_descuentos,
 		mcajeros_propios_descuentos,
 
-		ctarjeta_visa_descuentos, ctarjeta_master_descuentos,
+		--ctarjeta_visa_descuentos, ctarjeta_master_descuentos,
 
 		cast(coalesce(convert(decimal(10,2),cast(ctarjeta_visa_descuentos as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(ctarjeta_master_descuentos as varchar (6))),0) as int) as cantidad_descuentos_tc,
 
-		mtarjeta_visa_descuentos,mtarjeta_master_descuentos,
+		--mtarjeta_visa_descuentos,mtarjeta_master_descuentos,
 
 		cast(coalesce(convert(decimal(10,2),cast(mtarjeta_visa_descuentos as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mtarjeta_master_descuentos as varchar (6))),0) as int) as pesos_descuentos_tc,
 		
-		ccomisiones_mantenimiento, ccomisiones_otras,
+		--ccomisiones_mantenimiento, ccomisiones_otras,
 
 		cast(coalesce(convert(decimal(10,2),cast(ccomisiones_mantenimiento as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(ccomisiones_otras as varchar (6))),0) as int) as cantidad_comisiones_banco_mes,
 
-		mcomisiones_mantenimiento, mcomisiones_otras,
+		--mcomisiones_mantenimiento, mcomisiones_otras,
 
 		cast(coalesce(convert(decimal(10,2),cast(mcomisiones_mantenimiento as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mcomisiones_otras as varchar (6))),0) as int) as pesos_comisiones_banco_mes,
@@ -158,13 +164,13 @@ select
 		(convert(decimal(10, 2), cast(mcomisiones_mantenimiento as varchar (6))) + 
 			convert(decimal(10, 2),cast(mcomisiones_otras as varchar (6))))*1.0/convert(decimal(10,2),cast(cproductos as varchar (6))) as comision_por_producto,
 
-		cforex,cforex_buy,cforex_sell,
+		--cforex,cforex_buy,cforex_sell,
 
 		cast(coalesce(convert(decimal(10,2),cast(cforex as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(cforex_buy as varchar (6))),0) +
 			coalesce(convert(decimal(10,2),cast(cforex_sell as varchar (6))),0) as int) as cantidad_operaciones_forex,
 
-		mforex_buy, mforex_sell,
+		--mforex_buy, mforex_sell,
 
 		cast(coalesce(convert(decimal(10,2),cast(mforex_buy as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mforex_sell as varchar (6))),0) as int) as pesos_forex,
@@ -172,7 +178,7 @@ select
 		ctransferencias_recibidas,
 		ctransferencias_emitidas,
 
-		mtransferencias_recibidas, mtransferencias_emitidas,
+		--mtransferencias_recibidas, mtransferencias_emitidas,
 
 		cast(coalesce(convert(decimal(10,2),cast(mtransferencias_recibidas as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(mtransferencias_emitidas as varchar (6))),0) as int) as volumen_pesos_movidos,
@@ -185,7 +191,7 @@ select
 			(convert(decimal(10, 2), cast(mtransferencias_recibidas as varchar (6))) + 
 				convert(decimal(10, 2),cast(mtransferencias_emitidas as varchar (6))))*1.0/convert(decimal(10,2),cast(mcuentas_saldo as varchar (6))) end as int) as porcentaje_volumen_movido_saldo,
 
-		Visa_mlimitecompra, Master_mlimitecompra,
+		--Visa_mlimitecompra, Master_mlimitecompra,
 
 		cast(coalesce(convert(decimal(10,2),cast(Visa_mlimitecompra as varchar (6))),0) + 
 			coalesce(convert(decimal(10,2),cast(Master_mlimitecompra as varchar (6))),0) as int) as limite_compra,
