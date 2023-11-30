@@ -1,0 +1,19 @@
+Procedimiento:
+
+1. Cargue el archivo original en una base de datos SQL Server.
+
+2. El Feature Engineering lo hice en SQL.
+
+3. Corri la query y me exporte la salida en el archivo dataset_201902_a_202109_undersampling55_lags2_ylags3.csv (no lo cargue a github, porque pesa 7.33 gb)
+
+4. Levante el csv con el script de la OB.
+
+5. Corri la OB y obtuve los mejores hiperparametros en la iteracion 25 de las 66 iteraciones. Ganancia en la OB: $185.553.915
+
+6. Cargue el csv al script del Lightgbm, puse los hiperparametros obtenidos en la iteracion 25 de la OB.
+
+7. Ejecute el el script con 9 semillas diferentes, reconstrui la curva de ganancia utilizando el score del publico para determinar el K optimo. Las 9 semillas se encuentran comentadas dentro del script.
+
+8. Promedie las predicciones de los 9 archivos generados con las distintas semillas, los archivos estan en la carpeta "Predicciones".
+
+9. Ordene los clientes por su probabilidad de mayor a menor y le asigne 1 a los primeros 8400 clientes y eso fue lo enviado a kaggle (archivo "8400_envios_a_kaggle.csv")
